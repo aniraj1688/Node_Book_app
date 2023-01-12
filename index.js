@@ -34,6 +34,8 @@ app.get('/books/', getAllBooks)
 app.get('/books/:id', getBook)
 app.post('/books', addBook)
 app.put('/books/:id', updateBook)
+app.delete('/books/:id',deleteBook)
+
 
 function welcome(req, res){
     //console.log(req)
@@ -87,4 +89,15 @@ async function updateBook(req, res){
 `
   await db.run(query)
   res.send("Book updated successfully")
+}
+
+async function deleteBook(req, res){
+  const{id} = req.params
+
+  const query = `delete from book 
+  where book_id=${id}`
+
+  const dbResponse = await db.run(query)
+  res.send("Book id: "+id+ " Deleted successfully")
+
 }
